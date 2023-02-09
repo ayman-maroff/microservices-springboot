@@ -2,11 +2,13 @@ package ayman.articleservice.controllers;
 
 import ayman.articleservice.exception.ArticleNotFoundException;
 import ayman.articleservice.models.Article;
+import ayman.articleservice.models.Author;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +29,15 @@ public class ArticleController {
         this.articles.add(new Article(4, "Fourth Article", new Date(), 1));
         this.articles.add(new Article(5, "Fifth Article", new Date(), 1));
     }
+    @Autowired
+    RestTemplate restTemplate;
 
+    @GetMapping(path = "/author-name/{authorId}")
+    public Author authorName(@PathVariable("authorId") final Integer authorId){
+        Author author =restTemplate.getForObject("http://localhost:8082/"+authorId, Author.class);
+
+        return author;
+    }
     @GetMapping(path = "/{id}")
     public Article findById(@PathVariable("id") Integer id) {
         log.info(String.format("Articles.findById(%d)", id));
