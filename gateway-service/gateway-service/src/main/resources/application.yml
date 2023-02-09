@@ -1,0 +1,27 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: article-service
+          uri: http://article-service
+          predicates:
+            - Path=/article-service/**
+        - id: author-service
+          uri: lb://author-service
+          predicates:
+            - Path=/author-service/**
+        - id: story-service
+          uri: lb://story-service
+          predicates:
+            - Path=/story-service/**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: EUREKA_URL:http://localhost:8761/eureka/
+
