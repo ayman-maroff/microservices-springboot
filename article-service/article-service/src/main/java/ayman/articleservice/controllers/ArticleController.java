@@ -34,7 +34,7 @@ public class ArticleController {
 
     @GetMapping(path = "/author-name/{authorId}")
     public Author authorName(@PathVariable("authorId") final Integer authorId){
-        Author author =restTemplate.getForObject("http://localhost:8082/"+authorId, Author.class);
+        Author author =restTemplate.getForObject("http://author/"+authorId, Author.class);
 
         return author;
     }
