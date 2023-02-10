@@ -1,7 +1,13 @@
 package ayman.storyservice.controllers;
+import ayman.storyservice.configuration.MQconfig;
 import ayman.storyservice.exception.StoryNotFoundException;
 import ayman.storyservice.models.Story;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @Slf4j
 public class StoryController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StoryController.class);
     private List<Story> stories;
 
     public StoryController() {
@@ -32,6 +39,8 @@ public class StoryController {
     private String apiKey;
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @GetMapping(path = "/book/kind/{kind}")
 
@@ -54,6 +63,22 @@ public class StoryController {
         log.info(String.format("stories.findByAuthor(%d)", authorId));
         return this.stories.stream().filter(article -> article.getAuthorId().intValue() == authorId.intValue()).collect(Collectors.toList());
     }
+    @RabbitListener(queues = MQconfig.StoryReqQueue)
+    public void respStory(Integer SId){
+
+        LOGGER.info(String.format("Received StoryId: %s", SId));
+        Story story= this.stories.stream()
+                .filter(article -> article.getId().intValue() == SId.intValue())
+                .findFirst()
+                .orElseThrow(() -> new StoryNotFoundException("id : " + SId));
+
+
+        rabbitTemplate.convertAndSend(MQconfig.EXCHANGE,MQconfig.Story_RES_ROUTING_KEY,story);
+
+
+        LOGGER.info(String.format("Queued: Movie with id %s",story.getId()));
+    }
+
 
     @GetMapping(path = "/")
     public List<Story> getAll() {
