@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 9090
 spring:
   application:
     name: api-gateway
@@ -10,14 +10,30 @@ spring:
           uri: http://article-service
           predicates:
             - Path=/article-service/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: articleCircuitBreaker
+                fallbackUri: forward:/article-fallback
+
         - id: author-service
-          uri: lb://author-service
+          uri: http://author-service
           predicates:
             - Path=/author-service/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: authorCircuitBreaker
+                fallbackUri: forward:/author-fallback
         - id: story-service
-          uri: lb://story-service
+          uri: http://story-service
           predicates:
             - Path=/story-service/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: storyCircuitBreaker
+                fallbackUri: forward:/story-fallback
 eureka:
   client:
     register-with-eureka: true
@@ -25,3 +41,28 @@ eureka:
     service-url:
       default-zone: EUREKA_URL:http://localhost:8761/eureka/
 
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      catalogCircuitBreaker:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
