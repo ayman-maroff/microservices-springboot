@@ -34,6 +34,9 @@ spring:
               args:
                 name: storyCircuitBreaker
                 fallbackUri: forward:/story-fallback
+  zipkin:
+    baseurl: http://172.29.3.101:9411
+
 eureka:
   client:
     register-with-eureka: true
@@ -52,7 +55,9 @@ management:
   endpoint:
     health:
       show-details: always
-
+  tracing:
+    sampling:
+      probability: 1.0
 resilience4j:
   circuitbreaker:
     instances:
@@ -66,3 +71,6 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
+logging:
+  pattern:
+    level: ${spring.application.name:},%X{traceId:-},%X{spanId:-}

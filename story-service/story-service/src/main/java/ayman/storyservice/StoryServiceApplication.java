@@ -10,10 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class StoryServiceApplication {
-	@Bean
-	public RestTemplate getRestTemplate(){
-		return new RestTemplate();
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(StoryServiceApplication.class, args);

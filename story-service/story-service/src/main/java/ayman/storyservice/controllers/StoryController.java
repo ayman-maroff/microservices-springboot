@@ -5,7 +5,7 @@ import ayman.storyservice.models.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import ayman.storyservice.configuration.RestTamplateConfig;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @RestController
 @Slf4j
 public class StoryController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StoryController.class);
     private List<Story> stories;
 
     public StoryController() {
@@ -46,6 +45,7 @@ public class StoryController {
 
     public String authorName(@PathVariable("kind") final String kind){
         System.out.print(apiKey+kind);
+        log.info(String.format("get external books service(%s)", kind));
         String responseEntity = restTemplate.getForObject("https://www.googleapis.com/books/v1/volumes?q="+kind+"&key="+apiKey, String.class);
         return responseEntity;
     }
@@ -66,7 +66,7 @@ public class StoryController {
     @RabbitListener(queues = MQconfig.StoryReqQueue)
     public void respStory(Integer SId){
 
-        LOGGER.info(String.format("Received StoryId: %s", SId));
+        log.info(String.format("Received StoryId: %s", SId));
         Story story= this.stories.stream()
                 .filter(article -> article.getId().intValue() == SId.intValue())
                 .findFirst()
@@ -76,7 +76,7 @@ public class StoryController {
         rabbitTemplate.convertAndSend(MQconfig.EXCHANGE,MQconfig.Story_RES_ROUTING_KEY,story);
 
 
-        LOGGER.info(String.format("Queued: Movie with id %s",story.getId()));
+        log.info(String.format("Queued: Movie with id %s",story.getId()));
     }
 
 

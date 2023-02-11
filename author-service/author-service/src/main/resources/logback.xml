@@ -12,7 +12,7 @@
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/author.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>author.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/author.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>10</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>

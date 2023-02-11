@@ -9,12 +9,6 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ArticleServiceApplication {
-	@Bean
-	@LoadBalanced
-	public RestTemplate getRestTemplate(){
-		return new RestTemplate();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(ArticleServiceApplication.class, args);
 	}
