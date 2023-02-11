@@ -1,0 +1,52 @@
+13:32:28.105 INFO  Starting StoryServiceApplication using Java 17.0.5 with PID 15572 (C:\Users\DELL\Desktop\microservices-springboot\story-service\story-service\target\classes started by DELL in C:\Users\DELL\Desktop\microservices-springboot)
+13:32:28.116 INFO  No active profile set, falling back to 1 default profile: "default"
+13:32:30.616 INFO  BeanFactory id=b707804c-f530-34c7-93ba-54b63a171a64
+13:32:31.545 INFO  Tomcat initialized with port(s): 8083 (http)
+13:32:31.565 INFO  Initializing ProtocolHandler ["http-nio-8083"]
+13:32:31.567 INFO  Starting service [Tomcat]
+13:32:31.567 INFO  Starting Servlet engine: [Apache Tomcat/10.1.5]
+13:32:31.788 INFO  Initializing Spring embedded WebApplicationContext
+13:32:31.790 INFO  Root WebApplicationContext: initialization completed in 3551 ms
+13:32:33.697 INFO  Eureka HTTP Client uses RestTemplate.
+13:32:34.054 WARN  Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+13:32:34.172 INFO  Setting initial instance status as: STARTING
+13:32:34.327 INFO  Initializing Eureka in region us-east-1
+13:32:34.339 INFO  Resolving eureka endpoints via configuration
+13:32:34.389 INFO  Disable delta property : false
+13:32:34.390 INFO  Single vip registry refresh property : null
+13:32:34.390 INFO  Force full registry fetch : false
+13:32:34.391 INFO  Application is null : false
+13:32:34.391 INFO  Registered Applications size is zero : true
+13:32:34.392 INFO  Application version is -1: true
+13:32:34.392 INFO  Getting all instance registry info from the eureka server
+13:32:34.964 INFO  The response status is 200
+13:32:34.969 INFO  Starting heartbeat executor: renew interval is: 30
+13:32:34.974 INFO  InstanceInfoReplicator onDemand update allowed rate per min is 4
+13:32:34.984 INFO  Discovery Client initialized at timestamp 1676115154982 with initial instances count: 1
+13:32:34.988 INFO  Registering application STORY-SERVICE with eureka with status UP
+13:32:34.989 INFO  Saw local status change event StatusChangeEvent [timestamp=1676115154989, current=UP, previous=STARTING]
+13:32:34.994 INFO  DiscoveryClient_STORY-SERVICE/abo-osama:story-service:8083: registering service...
+13:32:34.996 INFO  Starting ProtocolHandler ["http-nio-8083"]
+13:32:35.073 INFO  Tomcat started on port(s): 8083 (http) with context path ''
+13:32:35.076 INFO  Updating port to 8083
+13:32:35.080 INFO  DiscoveryClient_STORY-SERVICE/abo-osama:story-service:8083 - registration status: 204
+13:32:35.284 INFO  Attempting to connect to: [172.29.3.101:5672]
+13:32:35.454 INFO  Created new connection: rabbitConnectionFactory#be164d8:0/SimpleConnection@3275a47f [delegate=amqp://guest@172.29.3.101:5672/, localPort=4368]
+13:32:35.775 INFO  Started StoryServiceApplication in 8.765 seconds (process running for 10.567)
+13:37:34.401 INFO  Resolving eureka endpoints via configuration
+13:38:08.666 INFO  Initializing Spring DispatcherServlet 'dispatcherServlet'
+13:38:08.667 INFO  Initializing Servlet 'dispatcherServlet'
+13:38:08.669 INFO  Completed initialization in 1 ms
+13:38:08.721 INFO  stories.findById(1)
+13:38:08.997 WARN  Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; For input string: "favicon.ico"]
+13:38:20.735 INFO  Unregistering application STORY-SERVICE with eureka with status DOWN
+13:38:20.735 INFO  Saw local status change event StatusChangeEvent [timestamp=1676115500735, current=DOWN, previous=UP]
+13:38:20.736 INFO  DiscoveryClient_STORY-SERVICE/abo-osama:story-service:8083: registering service...
+13:38:20.744 INFO  DiscoveryClient_STORY-SERVICE/abo-osama:story-service:8083 - registration status: 204
+13:38:20.761 INFO  Waiting for workers to finish.
+13:38:21.104 INFO  Successfully waited for workers to finish.
+13:38:21.133 INFO  Shutdown ignored - container is already stopped
+13:38:21.159 INFO  Shutting down DiscoveryClient ...
+13:38:24.167 INFO  Unregistering ...
+13:38:24.174 INFO  DiscoveryClient_STORY-SERVICE/abo-osama:story-service:8083 - deregister  status: 200
+13:38:24.182 INFO  Completed shut down of DiscoveryClient
